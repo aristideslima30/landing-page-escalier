@@ -1,8 +1,4 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import nodemailer from 'nodemailer';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
 
 // Configuração CORS
 const allowCors = (fn: Function) => async (req: VercelRequest, res: VercelResponse) => {
@@ -23,11 +19,15 @@ const allowCors = (fn: Function) => async (req: VercelRequest, res: VercelRespon
 };
 
 async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Método não permitido' });
-  }
-
   try {
+    console.log('🚀 API chamada recebida');
+    console.log('Method:', req.method);
+    console.log('Body:', req.body);
+
+    if (req.method !== 'POST') {
+      return res.status(405).json({ message: 'Método não permitido' });
+    }
+
     const { name, email, whatsapp, company } = req.body;
 
     // Validação básica
@@ -37,80 +37,54 @@ async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    console.log('📝 Dados recebidos:', { name, email, whatsapp, company });
+    console.log('✅ Dados validados:', { name, email, whatsapp, company });
 
-    // 1. SALVAR NO BANCO DE DADOS
-    console.log('💾 Tentando salvar no banco...');
-    const contact = await prisma.contact.create({
-      data: {
-        name,
-        email,
-        whatsapp: whatsapp || null,
-        company: company || null,
-      },
-    });
-    console.log('✅ Contato salvo no banco:', contact.id);
+    // TESTE 1: Apenas salvar no banco (sem email)
+    try {
+      console.log('💾 Tentando conectar com Prisma...');
+      
+      // Import dinâmico do Prisma para evitar problemas de inicialização
+      const { PrismaClient } = await import('@prisma/client');
+      const prisma = new PrismaClient();
 
-    // 2. ENVIAR EMAIL
-    console.log('📧 Tentando enviar email...');
-    
-    // Verificar se as variáveis de ambiente existem
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS || !process.env.CONTACT_EMAIL) {
-      console.error('❌ Variáveis de email não configuradas');
+      console.log('💾 Prisma conectado, tentando salvar...');
+      
+      const contact = await prisma.contact.create({
+        data: {
+          name,
+          email,
+          whatsapp: whatsapp || null,
+          company: company || null,
+        },
+      });
+
+      console.log('✅ Contato salvo:', contact.id);
+      
+      await prisma.$disconnect();
+
       return res.status(200).json({ 
-        message: 'Contato salvo no banco, mas email não configurado',
+        message: 'Contato salvo com sucesso! (Email temporariamente desabilitado)',
         contactId: contact.id,
-        warning: 'Email não enviado - variáveis não configuradas'
+        debug: 'Banco funcionando'
+      });
+
+    } catch (dbError) {
+      console.error('❌ Erro no banco:', dbError);
+      
+      return res.status(500).json({ 
+        message: 'Erro ao salvar no banco de dados',
+        error: dbError instanceof Error ? dbError.message : 'Erro desconhecido no banco'
       });
     }
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.CONTACT_EMAIL,
-      subject: 'Novo contato da Landing Page - Escalier',
-      html: `
-        <h2>Novo contato recebido!</h2>
-        <p><strong>Nome:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>WhatsApp:</strong> ${whatsapp || 'Não informado'}</p>
-        <p><strong>Empresa:</strong> ${company || 'Não informada'}</p>
-        <p><strong>Data:</strong> ${new Date().toLocaleString('pt-BR')}</p>
-        <hr>
-        <p><em>ID do contato no banco: ${contact.id}</em></p>
-      `,
-    };
-
-    await transporter.sendMail(mailOptions);
-    console.log('✅ Email enviado com sucesso');
-
-    return res.status(200).json({ 
-      message: 'Contato salvo e email enviado com sucesso!',
-      contactId: contact.id
-    });
-
   } catch (error) {
-    console.error('❌ Erro detalhado:', error);
-    
-    // Log mais detalhado do erro
-    if (error instanceof Error) {
-      console.error('Mensagem:', error.message);
-      console.error('Stack:', error.stack);
-    }
+    console.error('❌ Erro geral:', error);
     
     return res.status(500).json({ 
       message: 'Erro interno do servidor',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Erro interno'
+      error: error instanceof Error ? error.message : 'Erro desconhecido',
+      stack: error instanceof Error ? error.stack : undefined
     });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
