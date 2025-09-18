@@ -1,4 +1,4 @@
-import { ArrowRight, Play, CheckCircle } from 'lucide-react';
+import { ArrowRight, Zap } from 'lucide-react';
 
 export default function Hero() {
   return (
@@ -101,7 +101,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%, 100% {
             transform: translateY(0px);
