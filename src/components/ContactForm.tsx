@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, Clock, Users, Award } from 'lucide-react';
+import { Send } from 'lucide-react';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -11,6 +11,13 @@ export default function ContactForm() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,82 +48,59 @@ export default function ContactForm() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
   return (
-    <section id="consultoria" className="py-20 bg-gradient-to-b from-black to-purple-900/30">
+    <section id="contato" className="py-20 bg-gradient-to-b from-black to-purple-900/20 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Agende sua{' '}
+            Pronto para{' '}
             <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent">
-              Consultoria Gratuita
-            </span>
+              transformar
+            </span>{' '}
+            seu negócio?
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-4">
-            Descubra como automatizar seu marketing e escalar seu negócio em 60 minutos
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            Agende uma consultoria gratuita e descubra como a automação pode revolucionar sua empresa
           </p>
-          <div className="inline-flex items-center space-x-2 bg-orange-500/20 border border-orange-500/40 rounded-full px-4 py-2">
-            <Clock className="w-4 h-4 text-orange-400" />
-            <span className="text-orange-300 font-semibold">Vagas limitadas por mês - Garante a sua!</span>
-          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Benefits */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Left side - Benefits */}
           <div className="space-y-8">
-            <h3 className="text-2xl font-bold text-white mb-8">O que você vai receber:</h3>
-            
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <Users className="w-4 h-4 text-white" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-white mb-2">Análise Personalizada</h4>
-                  <p className="text-gray-300">Diagnóstico completo do seu funil de vendas e oportunidades de automação</p>
-                </div>
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                <Send className="w-6 h-6 text-white" />
               </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <Award className="w-4 h-4 text-white" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-white mb-2">Estratégia Customizada</h4>
-                  <p className="text-gray-300">Plano de ação específico para o seu negócio e setor de atuação</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <Clock className="w-4 h-4 text-white" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-white mb-2">ROI Projetado</h4>
-                  <p className="text-gray-300">Projeção de resultados e retorno sobre investimento em automação</p>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-2">Consultoria Personalizada</h3>
+                <p className="text-gray-300">Análise completa do seu negócio e identificação de oportunidades</p>
               </div>
             </div>
 
-            <div className="p-6 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-orange-500/20 border border-purple-500/30 rounded-xl">
-              <p className="text-white font-semibold text-lg">
-                💰 Valor da Consultoria: R$ 497
-              </p>
-              <p className="text-green-400 font-bold text-xl mt-2">
-                Para você: GRATUITA
-              </p>
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-pink-500 to-orange-500 rounded-lg flex items-center justify-center">
+                <Send className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-2">Implementação Rápida</h3>
+                <p className="text-gray-300">Resultados visíveis em até 30 dias com nossa metodologia comprovada</p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-orange-500 to-purple-500 rounded-lg flex items-center justify-center">
+                <Send className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-2">Suporte Contínuo</h3>
+                <p className="text-gray-300">Acompanhamento e otimização constante dos seus processos</p>
+              </div>
             </div>
           </div>
 
-          {/* Form */}
+          {/* Right side - Form */}
           <div className="relative">
-            <div className="bg-gradient-to-b from-purple-900/40 to-black/40 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-8">
+            <div className="bg-gradient-to-br from-purple-900/40 via-black/60 to-pink-900/40 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-8 shadow-2xl">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
@@ -184,11 +168,20 @@ export default function ContactForm() {
 
                 <button
                   type="submit"
-                  className="w-full group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white text-lg font-semibold rounded-xl hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+                  disabled={isSubmitting}
+                  className="w-full group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white text-lg font-semibold rounded-xl hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  Agendar Consultoria Gratuita
+                  {isSubmitting ? 'Enviando...' : 'Agendar Consultoria Gratuita'}
                   <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
+
+                {submitMessage && (
+                  <div className="mt-4 text-center">
+                    <p className={`text-sm ${submitMessage.includes('Erro') ? 'text-red-400' : 'text-green-400'}`}>
+                      {submitMessage}
+                    </p>
+                  </div>
+                )}
 
                 <p className="text-xs text-gray-400 text-center">
                   Seus dados estão seguros. Não enviamos spam.
