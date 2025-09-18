@@ -37,7 +37,10 @@ async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
+    console.log('📝 Dados recebidos:', { name, email, whatsapp, company });
+
     // 1. SALVAR NO BANCO DE DADOS
+    console.log('💾 Tentando salvar no banco...');
     const contact = await prisma.contact.create({
       data: {
         name,
@@ -46,9 +49,22 @@ async function handler(req: VercelRequest, res: VercelResponse) {
         company: company || null,
       },
     });
+    console.log('✅ Contato salvo no banco:', contact.id);
 
-    // 2. ENVIAR EMAIL (como antes)
-    const transporter = nodemailer.createTransport({
+    // 2. ENVIAR EMAIL
+    console.log('📧 Tentando enviar email...');
+    
+    // Verificar se as variáveis de ambiente existem
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS || !process.env.CONTACT_EMAIL) {
+      console.error('❌ Variáveis de email não configuradas');
+      return res.status(200).json({ 
+        message: 'Contato salvo no banco, mas email não configurado',
+        contactId: contact.id,
+        warning: 'Email não enviado - variáveis não configuradas'
+      });
+    }
+
+    const transporter = nodemailer.createTransporter({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
@@ -73,6 +89,7 @@ async function handler(req: VercelRequest, res: VercelResponse) {
     };
 
     await transporter.sendMail(mailOptions);
+    console.log('✅ Email enviado com sucesso');
 
     return res.status(200).json({ 
       message: 'Contato salvo e email enviado com sucesso!',
@@ -80,9 +97,17 @@ async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
   } catch (error) {
-    console.error('Erro ao processar contato:', error);
+    console.error('❌ Erro detalhado:', error);
+    
+    // Log mais detalhado do erro
+    if (error instanceof Error) {
+      console.error('Mensagem:', error.message);
+      console.error('Stack:', error.stack);
+    }
+    
     return res.status(500).json({ 
-      message: 'Erro interno do servidor' 
+      message: 'Erro interno do servidor',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Erro interno'
     });
   } finally {
     await prisma.$disconnect();
