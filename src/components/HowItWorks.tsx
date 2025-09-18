@@ -1,4 +1,4 @@
-import { MessageSquare, Settings, TrendingUp, CheckCircle } from 'lucide-react';
+import { MessageSquare, Settings, TrendingUp, CheckCircle, Search } from 'lucide-react';
 
 const steps = [
   {
