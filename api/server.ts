@@ -24,9 +24,17 @@ app.options('/api/contact', (req, res) => {
 });
 
 // All other requests get the index.html (SPA fallback)
-// Fix for path-to-regexp v8 error: use array syntax for catch-all
-app.get(['/', '/:slug*'], (req, res) => {
+// Fix for path-to-regexp v8 error: use separate routes instead of complex regex
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
+// Capture all other routes manually
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api')) {
+    return res.sendFile(path.join(__dirname, '../dist/index.html'));
+  }
+  next();
 });
 
 const port = process.env.PORT ? Number(process.env.PORT) : 3001;
