@@ -11,7 +11,7 @@ services:
       - "--entrypoints.web.address=:80"
       - "--entrypoints.https.address=:443"
       - "--certificatesresolvers.letsencrypt.acme.email=techescalier@gmail.com"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/data/acme.json"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
     ports:
@@ -19,7 +19,7 @@ services:
       - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "traefik-certificates:/acme.json"
+      - "traefik-certificates:/data"
     networks:
       - easypanel
     deploy:
@@ -61,7 +61,7 @@ services:
         - "traefik.http.services.escalier.loadbalancer.server.port=3001"
         # Router para HTTP (redirecionar para HTTPS)
         - "traefik.http.routers.escalier-http.rule=Host(`escaliertech.com.br`) || Host(`www.escaliertech.com.br`)"
-        - "traefik.http.routers.escalier-http.entrypoints=http"
+        - "traefik.http.routers.escalier-http.entrypoints=web"
         - "traefik.http.routers.escalier-http.middlewares=https-redirect"
         - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
         - "traefik.http.middlewares.https-redirect.redirectscheme.permanent=true"
