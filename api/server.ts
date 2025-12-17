@@ -24,7 +24,8 @@ app.options('/api/contact', (req, res) => {
 });
 
 // All other requests get the index.html (SPA fallback)
-app.get('*', (req, res) => {
+// Fix for path-to-regexp v8 error: use splat syntax for catch-all
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
