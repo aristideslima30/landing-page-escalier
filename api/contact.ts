@@ -1,6 +1,6 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
+import { Request, Response } from 'express';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   // CORS básico
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');

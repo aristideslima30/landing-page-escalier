@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Send } from 'lucide-react';
 
 export default function ContactForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -38,10 +40,11 @@ export default function ContactForm() {
       if (response.ok) {
         setSubmitMessage('Obrigado! Entraremos em contato em breve.');
         setFormData({ name: '', email: '', whatsapp: '', company: '' });
+        navigate('/obrigado');
       } else {
         setSubmitMessage(data.message || 'Erro ao enviar solicitação. Tente novamente.');
       }
-    } catch (error) {
+    } catch {
       setSubmitMessage('Erro ao enviar solicitação. Verifique sua conexão e tente novamente.');
     } finally {
       setIsSubmitting(false);

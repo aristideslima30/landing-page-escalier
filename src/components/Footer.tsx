@@ -1,4 +1,4 @@
-import { Mail, MessageCircle, MapPin, Phone } from 'lucide-react';
+import { Mail, MessageCircle, MapPin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -56,10 +56,11 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold text-lg mb-6">Empresa</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Sobre Nós</a></li>
-              <li><a href="#depoimentos" className="text-gray-300 hover:text-white transition-colors">Casos de Sucesso</a></li>
+              <li><a href="/sobre" className="text-gray-300 hover:text-white transition-colors">Sobre Nós</a></li>
+              <li><a href="/como-funciona" className="text-gray-300 hover:text-white transition-colors">Como Funciona</a></li>
+              <li><a href="/casos-de-sucesso" className="text-gray-300 hover:text-white transition-colors">Casos de Sucesso</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Blog</a></li>
-              <li><a href="#consultoria" className="text-gray-300 hover:text-white transition-colors">Contato</a></li>
+              <li><a href="/contato" className="text-gray-300 hover:text-white transition-colors">Contato</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Carreiras</a></li>
             </ul>
           </div>
