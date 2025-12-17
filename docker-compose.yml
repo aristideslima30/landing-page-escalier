@@ -4,7 +4,7 @@ services:
   app:
     build: .
     ports:
-      - "80:3001"
+      - "8080:3001"
     # Comando para rodar migrações do banco antes de iniciar o servidor
     command: sh -c "npx prisma migrate deploy && npx tsx api/server.ts"
     environment:
