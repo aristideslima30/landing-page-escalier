@@ -10,10 +10,10 @@ services:
       - POSTGRES_PRISMA_URL=postgresql://postgres:escalier_secret_pass@db:5432/escalier?schema=public
       - POSTGRES_URL_NON_POOLING=postgresql://postgres:escalier_secret_pass@db:5432/escalier?schema=public
       - PORT=3001
-      # Adicione suas variáveis de email aqui se necessário
-      # - EMAIL_USER=...
-      # - EMAIL_PASS=...
-      # - CONTACT_EMAIL=...
+      # Variáveis de email (pegas do arquivo .env ou do sistema)
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASS=${EMAIL_PASS}
+      - CONTACT_EMAIL=${CONTACT_EMAIL}
     depends_on:
       - db
     restart: always
