@@ -27,11 +27,18 @@ services:
       labels:
         - "traefik.enable=true"
         - "traefik.docker.network=easypanel"
+        # Router para HTTPS (websecure)
         - "traefik.http.routers.escalier.rule=Host(`escaliertech.com.br`) || Host(`www.escaliertech.com.br`)"
         - "traefik.http.routers.escalier.entrypoints=websecure"
         - "traefik.http.routers.escalier.tls=true"
         - "traefik.http.routers.escalier.tls.certresolver=letsencrypt"
         - "traefik.http.services.escalier.loadbalancer.server.port=3001"
+        # Router para HTTP (redirecionar para HTTPS)
+        - "traefik.http.routers.escalier-http.rule=Host(`escaliertech.com.br`) || Host(`www.escaliertech.com.br`)"
+        - "traefik.http.routers.escalier-http.entrypoints=http"
+        - "traefik.http.routers.escalier-http.middlewares=https-redirect"
+        - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.middlewares.https-redirect.redirectscheme.permanent=true"
     depends_on:
       - db
 
