@@ -1,4 +1,5 @@
 import { Zap, Target, MessageCircle, Database, BarChart3 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const services = [
   {
@@ -84,12 +85,12 @@ export default function Services() {
 
         {/* CTA */}
         <div className="text-center">
-          <a
-            href="#consultoria"
+          <Link
+            to="/contato"
             className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white text-lg font-semibold rounded-xl hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
           >
             Descubra Qual Solução É Ideal Para Você
-          </a>
+          </Link>
         </div>
       </div>
     </section>

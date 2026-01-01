@@ -1,4 +1,5 @@
 import { Mail, MessageCircle, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -44,11 +45,11 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold text-lg mb-6">Serviços</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Automação com ChatBots Inteligentes</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Marketing Digital Inteligente</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Análise de Dados e Inteligência de Mercado</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Consultoria em IA e Inovação</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Consultoria de Marketing</a></li>
+              <li><Link to="/servicos" className="text-gray-300 hover:text-white transition-colors">Automação com ChatBots Inteligentes</Link></li>
+              <li><Link to="/servicos" className="text-gray-300 hover:text-white transition-colors">Marketing Digital Inteligente</Link></li>
+              <li><Link to="/servicos" className="text-gray-300 hover:text-white transition-colors">Análise de Dados e Inteligência de Mercado</Link></li>
+              <li><Link to="/servicos" className="text-gray-300 hover:text-white transition-colors">Consultoria em IA e Inovação</Link></li>
+              <li><Link to="/servicos" className="text-gray-300 hover:text-white transition-colors">Consultoria de Marketing</Link></li>
             </ul>
           </div>
 
@@ -56,12 +57,12 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold text-lg mb-6">Empresa</h4>
             <ul className="space-y-3">
-              <li><a href="/sobre" className="text-gray-300 hover:text-white transition-colors">Sobre Nós</a></li>
-              <li><a href="/como-funciona" className="text-gray-300 hover:text-white transition-colors">Como Funciona</a></li>
-              <li><a href="/casos-de-sucesso" className="text-gray-300 hover:text-white transition-colors">Casos de Sucesso</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Blog</a></li>
-              <li><a href="/contato" className="text-gray-300 hover:text-white transition-colors">Contato</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Carreiras</a></li>
+              <li><Link to="/sobre" className="text-gray-300 hover:text-white transition-colors">Sobre Nós</Link></li>
+              <li><Link to="/como-funciona" className="text-gray-300 hover:text-white transition-colors">Como Funciona</Link></li>
+              <li><Link to="/casos-de-sucesso" className="text-gray-300 hover:text-white transition-colors">Casos de Sucesso</Link></li>
+              <li><Link to="#" className="text-gray-300 hover:text-white transition-colors">Blog</Link></li>
+              <li><Link to="/contato" className="text-gray-300 hover:text-white transition-colors">Contato</Link></li>
+              <li><Link to="#" className="text-gray-300 hover:text-white transition-colors">Carreiras</Link></li>
             </ul>
           </div>
         </div>

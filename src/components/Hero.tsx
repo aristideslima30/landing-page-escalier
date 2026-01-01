@@ -1,4 +1,5 @@
 import { ArrowRight, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
@@ -39,17 +40,20 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                href="#consultoria"
+              <Link
+                to="/contato"
                 className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white text-lg font-semibold rounded-xl hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
               >
                 Agende sua Consultoria Gratuita
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </Link>
               
-              <button className="inline-flex items-center justify-center px-8 py-4 border border-purple-500/50 text-white text-lg font-semibold rounded-xl hover:bg-purple-500/10 transition-all duration-300">
+              <Link 
+                to="/como-funciona"
+                className="inline-flex items-center justify-center px-8 py-4 border border-purple-500/50 text-white text-lg font-semibold rounded-xl hover:bg-purple-500/10 transition-all duration-300"
+              >
                 Ver Como Funciona
-              </button>
+              </Link>
             </div>
 
             {/* Stats */}

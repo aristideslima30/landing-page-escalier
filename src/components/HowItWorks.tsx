@@ -1,4 +1,5 @@
 import { Settings, TrendingUp, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const steps = [
   {
@@ -70,12 +71,12 @@ export default function HowItWorks() {
 
         {/* CTA */}
         <div className="text-center mt-16">
-          <a
-            href="#consultoria"
+          <Link
+            to="/contato"
             className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white text-lg font-semibold rounded-xl hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
           >
             Comece Agora - É Gratuito
-          </a>
+          </Link>
         </div>
       </div>
     </section>
